@@ -43,19 +43,45 @@ int main(){
                 int columnPre;
                 int rowAfter;
                 int columnAfter;
+                int playerNumber;
+                bool playerOne = true;
+                bool playerTwo = true;
                 
-                newBoard.getBoard();
-                string moveStringPre = "";
-                string moveStringAfter = "";
-                cout << playerOneName << " move piece ";
-                cin>> moveStringPre;
                 
-                cout << " to ";
-                cin>> moveStringAfter;
                 
-                newBoard.getMoveSpot(moveStringPre, moveStringAfter,rowPre, columnPre, rowAfter, columnAfter);
-                newBoard.movePiece(rowPre, columnPre, rowAfter, columnAfter);				
-                newBoard.getBoard();
+                while (playerOne == true){
+					playerNumber = 1;
+					newBoard.getBoard();
+					string moveStringPre = "";
+					string moveStringAfter = "";
+					cout << playerOneName << " move piece ";
+					cin>> moveStringPre;
+					
+					cout << " to ";
+					cin>> moveStringAfter;
+					newBoard.getMoveSpot(moveStringPre, moveStringAfter,rowPre, columnPre, rowAfter, columnAfter);
+					playerOne = newBoard.movePiece(playerNumber, rowPre, columnPre, rowAfter, columnAfter);				
+					newBoard.getBoard();
+					
+				}
+				
+				while (playerTwo ==  true){
+					playerNumber = 2;
+					newBoard.getBoard();
+					string moveStringPre = "";
+					string moveStringAfter = "";
+					cout << playerTwoName << " move piece ";
+					cin>> moveStringPre;
+                
+					cout << " to ";
+					cin>> moveStringAfter;
+					newBoard.getMoveSpot(moveStringPre, moveStringAfter,rowPre, columnPre, rowAfter, columnAfter);
+					playerTwo = newBoard.movePiece(playerNumber, rowPre, columnPre, rowAfter, columnAfter);				
+					newBoard.getBoard();
+					
+				}
+				
+                
             }
             
             

@@ -118,20 +118,22 @@ public:
         return false;
     }
     
-    void movePiece(int rowPre, int columnPre, int rowAfter, int columnAfter){
-        if (this -> legalityOfMove(rowPre, columnPre, rowAfter, columnAfter) == true){
+    bool movePiece(int playerNumber, int rowPre, int columnPre, int rowAfter, int columnAfter){
+        if (this -> legalityOfMove(playerNumber, rowPre, columnPre, rowAfter, columnAfter) == true){
             board [rowAfter] [columnAfter] = board [rowPre] [columnPre];
             board [rowPre] [columnPre] = "SPACE";
+            return false;
         }
+        return true;
     }
     
-    bool legalityOfMove(int rowPre, int columnPre, int rowAfter, int columnAfter){
+    bool legalityOfMove(int playerNumber, int rowPre, int columnPre, int rowAfter, int columnAfter){
         
         string piece = board [rowPre] [columnPre];
         
         //Check to see if own piece is at the after point
         //if (
-        if (piece == addColor("P" , "red")){
+        if (piece == addColor("P" , "red") && playerNumber == 1){
             if (this -> pawnConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true){
                 if(this -> isPathClear(rowPre, columnPre, rowAfter, columnAfter)){
 					if (this->pieceP1(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
@@ -143,7 +145,7 @@ public:
             
             return false;
         }
-        else if (piece == addColor("KN", "red")) {
+        else if (piece == addColor("KN", "red") && playerNumber == 1) {
             if (this->knightConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
 				if (this->pieceP1(rowAfter, columnAfter)) {
 					return false;
@@ -152,10 +154,12 @@ public:
             }
             return false;
         }
-        else if (piece == addColor("R", "red")) {
+        else if (piece == addColor("R", "red") && playerNumber == 1) {
             if (this->rookConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
                 if(this -> isPathClear(rowPre, columnPre, rowAfter, columnAfter)){
-					if (this->pieceP1(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
+					
+					//Makes sure that P1's piece cannot take P1's piece
+					if (this->pieceP1(rowAfter, columnAfter)) {		
 						return false;
 					}
                     return true;
@@ -163,7 +167,7 @@ public:
             }
             return false;
         }
-        else if (piece == addColor("B", "red")) {
+        else if (piece == addColor("B", "red") && playerNumber == 1) {
             if (this->bishopConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
                 if(this -> isPathClear(rowPre, columnPre, rowAfter, columnAfter)){
 					if (this->pieceP1(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
@@ -174,7 +178,7 @@ public:
             }
             return false;
         }
-        else if (piece == addColor("Q", "red")) {
+        else if (piece == addColor("Q", "red") && playerNumber == 1) {
             if (this->queenConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
                 if(this -> isPathClear(rowPre, columnPre, rowAfter, columnAfter)){
 					if (this->pieceP1(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
@@ -185,7 +189,7 @@ public:
             }
             return false;
         }
-        else if (piece == addColor("K", "red")) {
+        else if (piece == addColor("K", "red") && playerNumber == 1) {
             if (this->kingConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
 				if (this->pieceP1(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
 					return false;
@@ -194,7 +198,7 @@ public:
             }
             return false;
         }
-        else if (piece == addColor("P" , "blue")) {
+        else if (piece == addColor("P" , "blue") && playerNumber == 2) {
             if (this->pawnConstraintsP2(rowPre, columnPre, rowAfter, columnAfter) == true) {
 				if (this->isPathClear(rowPre, columnPre, rowAfter, columnAfter)) {
 					if (this->pieceP2(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
@@ -205,7 +209,7 @@ public:
             }
             return false;
         }
-		else if (piece == addColor("KN", "blue")) {
+		else if (piece == addColor("KN", "blue") && playerNumber == 2) {
 			if (this->knightConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
 				if (this->pieceP2(rowAfter, columnAfter)) {
 					return false;
@@ -214,7 +218,7 @@ public:
 			}
 			return false;
 		}
-		else if (piece == addColor("R", "blue")) {
+		else if (piece == addColor("R", "blue") && playerNumber == 2) {
 			if (this->rookConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
 				if (this->isPathClear(rowPre, columnPre, rowAfter, columnAfter)) {
 					if (this->pieceP2(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
@@ -225,7 +229,7 @@ public:
 			}
 			return false;
 		}
-		else if (piece == addColor("B", "blue")) {
+		else if (piece == addColor("B", "blue") && playerNumber == 2) {
 			if (this->bishopConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
 				if (this->isPathClear(rowPre, columnPre, rowAfter, columnAfter)) {
 					if (this->pieceP2(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
@@ -236,7 +240,7 @@ public:
 			}
 			return false;
 		}
-		else if (piece == addColor("Q", "blue")) {
+		else if (piece == addColor("Q", "blue") && playerNumber == 2) {
 			if (this->queenConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
 				if (this->isPathClear(rowPre, columnPre, rowAfter, columnAfter)) {
 					if (this->pieceP2(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
@@ -247,7 +251,7 @@ public:
 			}
 			return false;
 		}
-		else if (piece == addColor("K", "blue")) {
+		else if (piece == addColor("K", "blue") && playerNumber == 2) {
 			if (this->kingConstraintsP1(rowPre, columnPre, rowAfter, columnAfter) == true) {
 				if (this->pieceP2(rowAfter, columnAfter)) {		//Makes sure that P1's piece cannot take P1's piece.
 					return false;
